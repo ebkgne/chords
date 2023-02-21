@@ -1,0 +1,67 @@
+<html>
+  <head>
+
+    <script src="https://unpkg.com/vue@2"></script>
+    <link href="https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- component template -->
+    <script type="text/x-template" id="grid-template">
+      <table>
+        <tr v-for="e in filteredHeroes" >
+          <td class="border border-transparent shadow px-4 py-2 leading-normal text-gray-700 bg-white rounded-md focus:outline-none focus:shadow-outline">
+            {{e}}
+          </td>
+        </tr>
+    </table>
+    
+    </script>
+
+  </head>
+  <body class="antialiased sans-serif bg-gray-200">
+    <!-- demo root element -->
+    <div id="demo">
+      <demo-grid
+        :heroes="gridData"
+      >
+      </demo-grid>
+    </div>
+    <div id="demo2">
+      <demo-grid
+        :heroes="gridData"
+      >
+      </demo-grid>
+    </div>
+
+    <script>
+      // register the grid component
+      Vue.component("demo-grid", {
+        template: "#grid-template",
+        props: {
+          heroes: Array,
+          columns: Array,
+        },
+
+        computed: {
+          filteredHeroes: function(z = 0) { 
+          
+            t = []
+            x = 0
+            while (x < 25) t[x++] = this.heroes[(Number(x)+2)%(this.heroes.length-1)]
+
+            return t; }
+        },
+
+      });
+
+      aaa = [
+            "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"
+          ];
+
+      // bootstrap the demo
+      var demo = new Vue({
+        el: "#demo", data: { gridData: aaa }
+
+      });
+    </script>
+  </body>
+</html>

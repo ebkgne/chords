@@ -1,67 +1,111 @@
 <html>
-  <head>
 
-    <script src="https://unpkg.com/vue@2"></script>
-    <link href="https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css" rel="stylesheet">
+<head>
+
+  <title>Chords Explorer</title>
+
+  <style>
+
+    body { width:100%; font-family:MS Sans Serif; background-color: darkgrey; position:absolute; top:20px; left:20px; }
+
+    td,tr,table,body { margin:0; padding:0; border-spacing: 6px; }
+
+    h1 { display:block; width:100%; text-align: center; font-size:24px; font-weight:bolder; padding-bottom: 20px; }
+
+    td {
+      font-size:14px; 
+      border-radius: 6px;
+      background-color: rgb(158, 155, 155);
+      text-align:center;
+      color: rgb(117, 117, 117);
+      padding:4px;
+      vertical-align:100%;
+
+    }
+
+    table { border : 1px solid gray; }
+
+    tr:first-child td:not(:first-child)  { background-color: rgb(71, 71, 71); }
+
+    .id { font-size:12px;  background-color:transparent; text-align: right; padding-right: 5px; }
+    /* .note3 { background-color:#a0df91; } */
+    .note4 { background-color:#5ccb40; }
+    .note0 { background-color:#de6464; }
+    /* .note10 { background-color:#deaf64; } */
+    .note7 { background-color:#0634ff; }
     
-    <!-- component template -->
-    <script type="text/x-template" id="grid-template">
-      <table>
-        <tr v-for="e in filteredHeroes" >
-          <td class="border border-transparent shadow px-4 py-2 leading-normal text-gray-700 bg-white rounded-md focus:outline-none focus:shadow-outline">
-            {{e}}
-          </td>
-        </tr>
-    </table>
+  </style>
+
+
+
+</head>
+
+<body>
+  <h1>Chords Explorer</h1>
+  <input type="range" min="0" max="12" value="0" onmousemove="offset = Number(this.value); draw()"/><br/>
+  <input type="range" min="0" max="12" value="0" onmousemove="chord = 12-Number(this.value); draw()"/><br/>
+  <a href="#" onclick="cordes.push(0); draw() ">add string</a><br />
+</body>
+  
+<script>
+
+  notesUS = [ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" ];
+  
+  function splitNotes(str) { 
     
-    </script>
+    notes = str.replaceAll(/(\w\#?)/g, "$1 ").trim().toUpperCase().split(" ") 
+  
+    for (e in notes) for (n in notesUS) if (notes[e] == notesUS[n]) { notes[e] = Number(n); break; } 
 
-  </head>
-  <body class="antialiased sans-serif bg-gray-200">
-    <!-- demo root element -->
-    <div id="demo">
-      <demo-grid
-        :heroes="gridData"
-      >
-      </demo-grid>
-    </div>
-    <div id="demo2">
-      <demo-grid
-        :heroes="gridData"
-      >
-      </demo-grid>
-    </div>
+    return notes;
+  }
 
-    <script>
-      // register the grid component
-      Vue.component("demo-grid", {
-        template: "#grid-template",
-        props: {
-          heroes: Array,
-          columns: Array,
-        },
 
-        computed: {
-          filteredHeroes: function(z = 0) { 
-          
-            t = []
-            x = 0
-            while (x < 25) t[x++] = this.heroes[(Number(x)+2)%(this.heroes.length-1)]
+  cordes = splitNotes("ADF#B"); // Cuatro Venezolano
 
-            return t; }
-        },
+  // cordes = splitNotes("EADGBE"); // Classical Guitare
 
-      });
+  fretes = 18
 
-      aaa = [
-            "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"
-          ];
+  offset = 0
 
-      // bootstrap the demo
-      var demo = new Vue({
-        el: "#demo", data: { gridData: aaa }
+  chord = 0
 
-      });
-    </script>
-  </body>
+  body = document.querySelector("body");
+
+  table = document.createElement('table');
+
+  body.appendChild(table)
+
+  function draw() {
+
+    table.innerHTML = ""
+
+    for (f = 0; f < fretes; f++) {
+
+      tr = document.createElement('tr');
+      z = document.createElement('td');
+      if (f) z.innerHTML = f
+      z.className = "id";
+      tr.appendChild(z)
+      
+      for (id in cordes) {
+
+        td = document.createElement('td');
+        id = (f+cordes[id]+offset)%(notesUS.length)
+        td.innerHTML = notesUS[id]
+        td.className = "note"+((id+chord)%(notesUS.length))
+        tr.appendChild(td);
+
+      }
+      
+      table.appendChild(tr)
+      
+    }
+  }
+
+  draw()
+
+</script>
+  
 </html>

@@ -6,7 +6,7 @@
 
   <style>
 
-    body { width:100%; font-family:MS Sans Serif; background-color: darkgrey; position:absolute; top:20px; left:20px; }
+    body { font-family:MS Sans Serif; background-color: darkgrey; position:absolute; top:20px; left:20px; }
 
     td,tr,table,body { margin:0; padding:0; border-spacing: 6px; }
 
@@ -28,9 +28,11 @@
       border: 2px solid red;
     }
 
-    table { border : 1px solid gray; float:left; margin-right: 30px; }
+      div { border : 1px solid gray; display: inline-block;  }
 
-    tr:first-child td:not(:first-child)  { background-color: rgb(71, 71, 71); }
+    #neck-view { }
+
+    /* tr:first-child td:not(:first-child)  { background-color: rgb(71, 71, 71); } */
 
     .id { font-size:12px;  background-color:transparent; text-align: right; padding-right: 5px; }
     /* .note3 { background-color:#a0df91; } */
@@ -46,13 +48,21 @@
 </head>
 
 <body>
+  <!-- <div style="position:absolute;right:0;bottom:0;display:inline;">made with love </div> -->
   <h1>Chords Explorer</h1>
-  <input type="range" min="0" max="12" value="0" onmousemove="offset = Number(this.value); draw()"/><br/>
-  <input type="range" min="0" max="12" value="0" onmousemove="chord = 12-Number(this.value); draw()"/><br/>
-  <a href="#" onclick="cordes.push(0); draw() ">add string</a><br />
+  
+  <div id="neck-view"><a href="#" onclick="cordes.push(0); draw() ">add string</a><br /></div>
+  <div>Current Chord : <b id="current_note">none</b><br />  
+    <input type="range" min="0" max="12" value="0" onmousemove="chord = 12-Number(this.value); draw()"/><br/>
+    <div id="chord-view"></div>
+  </div>
 </body>
   
 <script>
+
+data = []
+
+
 
   notesUS = [ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" ];
   
@@ -72,16 +82,15 @@
 
   fretes = 18
 
-  offset = 0
-
   chord = 0
 
-  body = document.querySelector("body");
 
   table = document.createElement('table');
-  body.appendChild(table)
+  document.querySelector("#neck-view").appendChild(table)
   
   function draw() {
+
+    document.getElementById("current_note").innerHTML = notesUS[chord%notesUS.length]
     
     table.innerHTML = ""
     
@@ -96,7 +105,7 @@
       for (id in cordes) {
         
         td = document.createElement('td');
-        id = (f+cordes[id]+offset)%(notesUS.length)
+        id = (f+cordes[id])%(notesUS.length)
         td.innerHTML = notesUS[id]
         td.className = "note"+((id+chord)%(notesUS.length))
         tr.appendChild(td);
@@ -106,20 +115,29 @@
       table.appendChild(tr)
       
     }
+
+    drawChord("span#major")
+    
+    drawChord("span#minor")
+    drawChord("span#seventh")
+    
   }
-  table2 = document.createElement('table');
-  body.appendChild(table2)
 
-  function draw2() {
+  cv = document.querySelector("#chord-view");
+  function drawChord(to, notes) {
 
-    table2.innerHTML = ""
+    table2 = document.createElement('table');
+    to = cv;
+    to.innerHTML = ""
+    to.appendChild(table2)
 
     tr = document.createElement('tr');
 
     for (n in notesUS) {
 
         td = document.createElement('td');
-        td.innerHTML = notesUS[n]
+        id = (Number(n)+chord)%(notesUS.length)
+        td.innerHTML = notesUS[id]
         td.className = "note"+n
         tr.appendChild(td);
         
@@ -129,7 +147,7 @@
   }
 
   draw()
-  draw2()
+
 
 </script>
   

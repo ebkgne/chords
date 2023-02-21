@@ -23,7 +23,12 @@
 
     }
 
-    table { border : 1px solid gray; }
+    td:hover {
+      padding:2px;
+      border: 2px solid red;
+    }
+
+    table { border : 1px solid gray; float:left; margin-right: 30px; }
 
     tr:first-child td:not(:first-child)  { background-color: rgb(71, 71, 71); }
 
@@ -74,15 +79,14 @@
   body = document.querySelector("body");
 
   table = document.createElement('table');
-
   body.appendChild(table)
-
+  
   function draw() {
-
+    
     table.innerHTML = ""
-
+    
     for (f = 0; f < fretes; f++) {
-
+      
       tr = document.createElement('tr');
       z = document.createElement('td');
       if (f) z.innerHTML = f
@@ -90,7 +94,7 @@
       tr.appendChild(z)
       
       for (id in cordes) {
-
+        
         td = document.createElement('td');
         id = (f+cordes[id]+offset)%(notesUS.length)
         td.innerHTML = notesUS[id]
@@ -103,8 +107,29 @@
       
     }
   }
+  table2 = document.createElement('table');
+  body.appendChild(table2)
+
+  function draw2() {
+
+    table2.innerHTML = ""
+
+    tr = document.createElement('tr');
+
+    for (n in notesUS) {
+
+        td = document.createElement('td');
+        td.innerHTML = notesUS[n]
+        td.className = "note"+n
+        tr.appendChild(td);
+        
+      }
+
+      table2.appendChild(tr)
+  }
 
   draw()
+  draw2()
 
 </script>
   

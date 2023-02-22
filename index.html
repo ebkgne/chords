@@ -1,26 +1,68 @@
 <html>
+  
+  <style>    
 
-<head>
+    .c1{background-color:#820f0f !important;}
+    .c2{background-color:#84190f !important;}
+    .c3{background-color:#87340e !important;}
+    .c4{background-color:#8d5a0d !important;}
+    .c5{background-color:#927e0c !important;}
+    .c6{background-color:#95940b !important;}
+    .c7{background-color:#93970b !important;}
+    .c8{background-color:#6d870e !important;}
+    .c9{background-color:#387111 !important;}
+    .c10{background-color:#1a6413 !important;}
+    .c11{background-color:#175f31 !important;}
+    .c12{background-color:#13567d !important;}
+    .grey{ background-color: rgb(158, 155, 155); color: rgb(117, 117, 117); }
 
-  <title>Chords Explorer</title>
+    td,tr,table,body,input,select { margin:0; padding:0; border-radius: 6px;}
 
-  <style>
+    #neck-view { margin-right:20px; }
 
-    body { font-family:MS Sans Serif; background-color: darkgrey; position:absolute; top:20px; left:20px; }
+    #chord-view , #chords-view { border:1px solid rgb(199, 198, 198); background-color: #b3b1b1; margin-top:20px;  }
 
-    td,tr,table,body { margin:0; padding:0; border-spacing: 6px; }
+    body { font-family:MS Sans Serif; font-size:32px;  background-color: darkgrey; padding: 20px; width:800px; margin:auto; } 
 
-    h1 { display:block; width:100%; text-align: center; font-size:24px; font-weight:bolder; padding-bottom: 20px; }
+    table { border-spacing: 6px; }
 
+    #neck-view > tr:first-child > td { background-color: rgba(1,1,1,.50); }
+
+    select,input { 
+      background-color: #c2c1c1; 
+      text-align: center;
+      border:1px solid rgb(199, 198, 198);  
+      color: #605f5f; 
+      font-weight: bolder; 
+      font-size: 26px; 
+      padding:6px;
+      margin:auto;
+    }
+    option { text-align: left;}
+    input { 
+      color: #9e9c9c;
+      font-size: 50px;
+      width: 230px; 
+    } 
+    b {
+      font-size:172px; 
+      color: rgb(65, 65, 65);
+    }
     td {
+      color: rgb(185, 185, 185);
       font-size:14px; 
-      border-radius: 6px;
-      background-color: rgb(158, 155, 155);
+      width:22px;
       text-align:center;
-      color: rgb(117, 117, 117);
-      padding:4px;
+      padding:8px;
       vertical-align:100%;
 
+    }
+
+    .diat>td {
+
+      /* background-color: transparent; */
+      color: rgb(54, 53, 53);
+      margin: 0;
     }
 
     td:hover {
@@ -28,127 +70,144 @@
       border: 2px solid red;
     }
 
-      div { border : 1px solid gray; display: inline-block;  }
-
-    #neck-view { }
-
-    /* tr:first-child td:not(:first-child)  { background-color: rgb(71, 71, 71); } */
-
-    .id { font-size:12px;  background-color:transparent; text-align: right; padding-right: 5px; }
-    /* .note3 { background-color:#a0df91; } */
-    .note4 { background-color:#5ccb40; }
-    .note0 { background-color:#de6464; }
-    /* .note10 { background-color:#deaf64; } */
-    .note7 { background-color:#0634ff; }
-    
   </style>
 
+  <body>
+
+    <div style="position: absolute; right:0;bottom:0;background-color:rgba(1,1,1,.2); color:rgba(1,1,1,.5); padding:4px;font-size:10px">made with love by <a href="#" id="mailto">roch</a></div>
+
+    <table id ="neck-view" style="float:left"></table>
+
+    <center>
+      
+      <br ><br ><b>none</b><br />
+
+    <input type="range" id="chord-picker"/> <br ><br >
+
+    <select></select><br ><br >
+
+    <table><tr class="diat">
+
+        <td class="c1">1th</td>
+        <td class="c1"></td>
+        <td class="c1">2nd</td>
+        <td class="c1"></td>
+        <td class="c1">3rd</td>
+        <td class="c1">4th</td>
+        <td class="c1"></td>
+        <td class="c1">5th</td>
+        <td class="c1"></td>
+        <td class="c1">6th</td>
+        <td class="c1">7th</td>
+        <td class="c1"></td>
+
+    </tr></table>
+    <table id="chord-view"></table><br ><br >
 
 
-</head>
-
-<body>
-  <!-- <div style="position:absolute;right:0;bottom:0;display:inline;">made with love </div> -->
-  <h1>Chords Explorer</h1>
-  
-  <div id="neck-view"><a href="#" onclick="cordes.push(0); draw() ">add string</a><br /></div>
-  <div>Current Chord : <b id="current_note">none</b><br />  
-    <input type="range" min="0" max="12" value="0" onmousemove="chord = 12-Number(this.value); draw()"/><br/>
-    <div id="chord-view"></div>
+    <input type="text" value="ADF#B" id="tune" onclick="this.select()" />
+  </center>
   </div>
-</body>
+
+  </body>
   
-<script>
+  <script>
 
-data = []
-
-
-
-  notesUS = [ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" ];
+    notes = [ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" ];
   
-  function splitNotes(str) { 
+    chords = [
+      
+      {"name":"minor", "notes":[0,3,7]},
+      {"name":"major", "notes":[0,4,7]},
+      {"name":"6th", "notes":[0,4,7,9]},
+      {"name":"7th", "notes":[0,4,7,10]},
+      {"name":"7th (minor)", "notes":[0,3,7,10]},
+      {"name":"7th (major)", "notes":[0,4,7,11]},
+      {"name":"9th", "notes":[0,4,7,2]},
+      {"name":"augmented", "notes":[0,4,8]},
+      {"name":"diminished", "notes":[0,9,3,6]},
+  
+    ]
+
+    strings = [0,5,9,2]
+
+    current_chord = 0
     
-    notes = str.replaceAll(/(\w\#?)/g, "$1 ").trim().toUpperCase().split(" ") 
-  
-    for (e in notes) for (n in notesUS) if (notes[e] == notesUS[n]) { notes[e] = Number(n); break; } 
-
-    return notes;
-  }
+    chord_type = 1
 
 
-  cordes = splitNotes("ADF#B"); // Cuatro Venezolano
-
-  // cordes = splitNotes("EADGBE"); // Classical Guitare
-
-  fretes = 18
-
-  chord = 0
-
-
-  table = document.createElement('table');
-  document.querySelector("#neck-view").appendChild(table)
-  
-  function draw() {
-
-    document.getElementById("current_note").innerHTML = notesUS[chord%notesUS.length]
+    function splitNotes(str) { 
     
-    table.innerHTML = ""
+      str = str.replaceAll(/(\w\#?)/g, "$1 ").trim().toUpperCase().split(" ") 
     
-    for (f = 0; f < fretes; f++) {
-      
-      tr = document.createElement('tr');
-      z = document.createElement('td');
-      if (f) z.innerHTML = f
-      z.className = "id";
-      tr.appendChild(z)
-      
-      for (id in cordes) {
-        
-        td = document.createElement('td');
-        id = (f+cordes[id])%(notesUS.length)
-        td.innerHTML = notesUS[id]
-        td.className = "note"+((id+chord)%(notesUS.length))
-        tr.appendChild(td);
+      for (e in str) for (n in notes) if (str[e] == notes[n]) { str[e] = Number(n); break; } 
 
-      }
-      
-      table.appendChild(tr)
-      
+      return str;
     }
 
-    drawChord("span#major")
+    function createTR(dest) { tr = document.createElement('tr'); dest.appendChild(tr); return tr; }
+    function createTD(id) { td = document.createElement('td'); td.id="id"+Number(id); td.innerHTML = notes[id]; return td; }
+
+    neck_view   = document.querySelector('#neck-view');
+    chord_view  = document.querySelector('#chord-view');
+    input       = document.querySelector('input#chord-picker');
+    tune        = document.querySelector('input#tune');
+    note_view   = document.querySelector("b");
+
+    document.querySelector("#mailto").href = ("msasislstsos:srsoscshs@tsosusrsksists.snsest".replaceAll("s",""))
+
+
+    function draw() {
+      
+      neck_view.innerHTML = ""
+      chord_view.innerHTML = ""
     
-    drawChord("span#minor")
-    drawChord("span#seventh")
-    
-  }
-
-  cv = document.querySelector("#chord-view");
-  function drawChord(to, notes) {
-
-    table2 = document.createElement('table');
-    to = cv;
-    to.innerHTML = ""
-    to.appendChild(table2)
-
-    tr = document.createElement('tr');
-
-    for (n in notesUS) {
-
-        td = document.createElement('td');
-        id = (Number(n)+chord)%(notesUS.length)
-        td.innerHTML = notesUS[id]
-        td.className = "note"+n
-        tr.appendChild(td);
+      for (f = 0; f < 18; f++) {
+        
+        tr = createTR(neck_view);
+        
+        for (id in strings) tr.appendChild(createTD((f+strings[id])%notes.length));
         
       }
 
-      table2.appendChild(tr)
-  }
+      note_view.innerHTML = notes[current_chord]
 
-  draw()
+      tr = createTR(chord_view);
+      
+      for (f = 0; f < notes.length; f++) tr.appendChild(createTD((f+current_chord)%notes.length));
+
+      document.querySelectorAll("td:not(.grey)").forEach(function(e){ e.className = "grey" })
+
+      chords[chord_type].notes.forEach((e)=>{
+        
+        document.querySelectorAll("#id"+String((e+current_chord)%notes.length)).forEach(function(f){  f.className = ("c"+(e+1)) })
 
 
-</script>
+      })
+
+    }
+
+    tune.onkeyup = function(e) { strings = splitNotes(e.target.value); draw() }
+
+    input.value = current_chord;
+    input.max = notes.length-1;
+    input.onmousemove = (e) => {current_chord=Number(e.target.value); draw()}
+
+    for (c in chords) {
+
+      select = document.querySelector("select")
+      opt = document.createElement("option")
+      opt.innerHTML = chords[c].name
+      opt.value = c
+      if (chord_type == c) opt.selected = "selected"
+      select.onchange = function(e) { chord_type = Number(e.target.value); draw() }
+      select.appendChild(opt)
+
+    }
+
+    draw()
+
+  </script>
+
   
 </html>

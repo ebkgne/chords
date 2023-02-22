@@ -1,77 +1,75 @@
 <html>
+
+  <!-- Chord Explorer v.1a
+
+      made by roch (2023) -->
   
-  <style>    
+  <head>
+    
+    <title>Chord Explorer</title>
 
-    .c1{background-color:#820f0f !important;}
-    .c2{background-color:#84190f !important;}
-    .c3{background-color:#87340e !important;}
-    .c4{background-color:#8d5a0d !important;}
-    .c5{background-color:#927e0c !important;}
-    .c6{background-color:#95940b !important;}
-    .c7{background-color:#93970b !important;}
-    .c8{background-color:#6d870e !important;}
-    .c9{background-color:#387111 !important;}
-    .c10{background-color:#1a6413 !important;}
-    .c11{background-color:#175f31 !important;}
-    .c12{background-color:#13567d !important;}
-    .grey{ background-color: rgb(158, 155, 155); color: rgb(117, 117, 117); }
+    <style>    
 
-    td,tr,table,body,input,select { margin:0; padding:0; border-radius: 6px;}
+      .c1{background-color:#820f0f !important;}
+      .c2{background-color:#84190f !important;}
+      .c3{background-color:#87340e !important;}
+      .c4{background-color:#8d5a0d !important;}
+      .c5{background-color:#927e0c !important;}
+      .c6{background-color:#95940b !important;}
+      .c7{background-color:#93970b !important;}
+      .c8{background-color:#6d870e !important;}
+      .c9{background-color:#387111 !important;}
+      .c10{background-color:#1a6413 !important;}
+      .c11{background-color:#175f31 !important;}
+      .c12{background-color:#13567d !important;}
+      .grey{ background-color: rgb(158, 155, 155); color: rgb(117, 117, 117); }
 
-    #neck-view { margin-right:20px; }
+      td,tr,table,body,input,select { margin:0; padding:0; border-radius: 6px;}
 
-    #chord-view , #chords-view { border:1px solid rgb(199, 198, 198); background-color: #b3b1b1; margin-top:20px;  }
+      #neck-view { margin-right:20px; }
 
-    body { font-family:MS Sans Serif; font-size:32px;  background-color: darkgrey; padding: 20px; width:800px; margin:auto; } 
+      table:not(#neck-view)  { border:1px solid rgb(199, 198, 198); background-color: #b3b1b1; margin-top:20px;  }
 
-    table { border-spacing: 6px; }
+      body { font-family:MS Sans Serif; font-size:32px;  background-color: darkgrey; padding: 20px; width:800px; margin:auto; } 
 
-    #neck-view > tr:first-child > td { background-color: rgba(1,1,1,.50); }
+      table { border-spacing: 6px; }
 
-    select,input { 
-      background-color: #c2c1c1; 
-      text-align: center;
-      border:1px solid rgb(199, 198, 198);  
-      color: #605f5f; 
-      font-weight: bolder; 
-      font-size: 26px; 
-      padding:6px;
-      margin:auto;
-    }
-    option { text-align: left;}
-    input { 
-      color: #9e9c9c;
-      font-size: 50px;
-      width: 230px; 
-    } 
-    b {
-      font-size:172px; 
-      color: rgb(65, 65, 65);
-    }
-    td {
-      color: rgb(185, 185, 185);
-      font-size:14px; 
-      width:22px;
-      text-align:center;
-      padding:8px;
-      vertical-align:100%;
+      #neck-view > tr:first-child > td { background-color: rgba(1,1,1,.50); }
+      
+      option { text-align: left;}
+      
+      b { font-size:172px; color: rgb(65, 65, 65); }
+      
+      .diat>td { color: rgb(54, 53, 53); background-color:  rgb(173, 170, 170);  }
 
-    }
+      #neck-view > tr > td:hover { padding:2px; border: 2px solid red; }
+      
+      select,input { 
+        background-color: #c2c1c1; 
+        text-align: center;
+        border:1px solid rgb(199, 198, 198);  
+        color: #605f5f; 
+        font-weight: bolder; 
+        font-size: 26px; 
+        padding:6px;
+      }
+      
+      input { color: #9e9c9c; font-size: 50px; width: 230px; } 
+      
+      td {
+        color: rgb(185, 185, 185);
+        font-size:14px; 
+        width:22px;
+        text-align:center;
+        padding:8px;
+        vertical-align:100%;
 
-    .diat>td {
+      }
 
-      /* background-color: transparent; */
-      color: rgb(54, 53, 53);
-      margin: 0;
-    }
-
-    td:hover {
-      padding:2px;
-      border: 2px solid red;
-    }
-
-  </style>
-
+    </style>
+  
+  </head>
+  
   <body>
 
     <div style="position: absolute; right:0;bottom:0;background-color:rgba(1,1,1,.2); color:rgba(1,1,1,.5); padding:4px;font-size:10px">made with love by <a href="#" id="mailto">roch</a></div>
@@ -80,32 +78,19 @@
 
     <center>
       
-      <br ><br ><b>none</b><br />
+      <br ><b>none</b><br />
 
     <input type="range" id="chord-picker"/> <br ><br >
 
     <select></select><br ><br >
 
-    <table><tr class="diat">
-
-        <td class="c1">1th</td>
-        <td class="c1"></td>
-        <td class="c1">2nd</td>
-        <td class="c1"></td>
-        <td class="c1">3rd</td>
-        <td class="c1">4th</td>
-        <td class="c1"></td>
-        <td class="c1">5th</td>
-        <td class="c1"></td>
-        <td class="c1">6th</td>
-        <td class="c1">7th</td>
-        <td class="c1"></td>
-
-    </tr></table>
-    <table id="chord-view"></table><br ><br >
+    <table>
+      <tr class="diat"><td>1th</td><td></td><td>2nd</td><td></td><td>3rd</td><td>4th</td><td></td><td>5th</td><td></td><td>6th</td><td></td><td>7th</td></tr>
+      <tr id="chord-view"></tr>
+    </table><br ><br >
 
 
-    <input type="text" value="ADF#B" id="tune" onclick="this.select()" />
+    <input type="text" id="tune" onclick="this.select()" />
   </center>
   </div>
 
@@ -120,8 +105,8 @@
       {"name":"minor", "notes":[0,3,7]},
       {"name":"major", "notes":[0,4,7]},
       {"name":"6th", "notes":[0,4,7,9]},
-      {"name":"7th", "notes":[0,4,7,10]},
       {"name":"7th (minor)", "notes":[0,3,7,10]},
+      {"name":"7th", "notes":[0,4,7,10]},
       {"name":"7th (major)", "notes":[0,4,7,11]},
       {"name":"9th", "notes":[0,4,7,2]},
       {"name":"augmented", "notes":[0,4,8]},
@@ -129,7 +114,7 @@
   
     ]
 
-    strings = [0,5,9,2]
+    strings = []
 
     current_chord = 0
     
@@ -137,6 +122,8 @@
 
 
     function splitNotes(str) { 
+
+      // window.location.href
     
       str = str.replaceAll(/(\w\#?)/g, "$1 ").trim().toUpperCase().split(" ") 
     
@@ -162,6 +149,7 @@
       neck_view.innerHTML = ""
       chord_view.innerHTML = ""
     
+        // neck part
       for (f = 0; f < 18; f++) {
         
         tr = createTR(neck_view);
@@ -170,11 +158,11 @@
         
       }
 
-      note_view.innerHTML = notes[current_chord]
+      // chord part
 
-      tr = createTR(chord_view);
+      note_view.innerHTML = notes[current_chord]
       
-      for (f = 0; f < notes.length; f++) tr.appendChild(createTD((f+current_chord)%notes.length));
+      for (f = 0; f < notes.length; f++) chord_view.appendChild(createTD((f+current_chord)%notes.length));
 
       document.querySelectorAll("td:not(.grey)").forEach(function(e){ e.className = "grey" })
 
@@ -187,7 +175,7 @@
 
     }
 
-    tune.onkeyup = function(e) { strings = splitNotes(e.target.value); draw() }
+    tune.onkeyup = function(e) { strings = splitNotes(e.target.value); draw(); window.location.href = "#?tuning="+e.target.value }
 
     input.value = current_chord;
     input.max = notes.length-1;
@@ -207,7 +195,10 @@
 
     draw()
 
+    url_string = window.location.href.split("tuning=")[1];
+    tune.value = (url_string && url_string.length) ? url_string : "ADF#B"
+    tune.dispatchEvent(new Event('keyup'));
+
   </script>
 
-  
 </html>

@@ -1,14 +1,14 @@
 # chords
 
-cross chord instrument tuning 
+cross string instrument tuning 
 
 ukele,cuatro,guitare,banjo,tres,.. in any tuning
 
-as a person with no music theory background I always had hardtime understanding how chords are made on a guitare or so, nur one day I discovered the quite simple diatonic scale and understood that all western music is based on that 
+as a person with no music theory background I always had hardtime understanding how chords work on a string instruments, but one day I discovered the quite simple diatonic scale and understood that all western music is based on that 
 
-so I came up with this tool wich translate in a methodology to understand the instruments neck in a way that is more fit to me, and maybe you .
+so I came up with this tool wich translate in a new tool to understand the instruments neck in a way that is more fit to me than good old tabs sheets.
 
-pure VanillaJS 
+its pure VanillaJS 
 
 try it here : https://thebeatniks.org/lab/chords/#?tuning=ADF#B
 
